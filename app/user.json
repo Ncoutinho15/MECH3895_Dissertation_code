@@ -1,0 +1,13 @@
+{
+  "patient_id": "demo_patient_001",
+  "name": "Demo Patient",
+  "age": "54",
+  "condition": "Shoulder Impingement",
+  "stage": "early",
+  "irritability": "high",
+  "limitations": "Pain when reaching overhead and difficulty sleeping on the affected side",
+  "affected_side": "right",
+  "pain_score": 4,
+  "created_at": "2026-05-10",
+  "notes": "Demo patient profile for Exercise Planner testing"
+}

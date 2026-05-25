@@ -1,0 +1,287 @@
+{
+  "version": "1.1",
+  "schema_version": "exercise_library.v1.1",
+  "purpose": "Offline exercise library for shoulder and arm rehabilitation planning",
+  "library_note": "The planner catalogue is broader than the motion-analysis demo. Only the pendulum exercise is tracker-ready in the current repository; other exercises remain planner-available and can be connected later to additional kinematic modules.",
+  "planner_rules": {
+    "target_programme_size": 5,
+    "minimum_safe_programme_size": 3,
+    "never_relax_stage": true,
+    "allow_irritability_relaxation": true,
+    "generation_mode": "constrained_llm_with_rule_based_fallback"
+  },
+  "safety_rules": {
+    "pain_monitoring": {
+      "max_allowed_pain_during_exercise": 5,
+      "max_allowed_pain_after_exercise": 5,
+      "next_morning_rule": "Pain should settle by the following morning and should not increase week to week"
+    },
+    "progression_rules": {
+      "high_irritability": "Use gentle mobility, low load, low volume, daily frequency if tolerated",
+      "moderate_irritability": "Use controlled mobility and light strengthening",
+      "low_irritability": "Use progressive strengthening and functional exercise"
+    }
+  },
+  "dosage_rules": {
+    "early": {
+      "sets_range": [1, 2],
+      "reps_range": [8, 12],
+      "frequency": "daily"
+    },
+    "mid": {
+      "sets_range": [2, 3],
+      "reps_range": [10, 15],
+      "frequency": "3-5 days/week"
+    },
+    "late": {
+      "sets_range": [2, 4],
+      "reps_range": [8, 15],
+      "frequency": "2-4 days/week"
+    }
+  },
+  "exercises": [
+    {
+      "id": "pendulum",
+      "name": "Pendulum Exercise",
+      "conditions": ["Shoulder Impingement", "Rotator Cuff", "Frozen Shoulder", "General Shoulder Pain"],
+      "stages": ["early"],
+      "irritability": ["high", "moderate"],
+      "category": "mobility",
+      "equipment": ["chair or table support optional"],
+      "default_sets": 2,
+      "default_reps": 10,
+      "frequency": "daily",
+      "instructions": "Lean forward slightly with the unaffected arm supported on a table. Let the affected arm hang relaxed. Gently move the arm in small circles or forward and backward. Keep the shoulder relaxed and avoid forcing the movement.",
+      "avoid": "Do not swing aggressively or push into sharp pain.",
+      "xai_reason": "Selected because early-stage or irritable shoulder pain benefits from gentle movement with low load.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": true,
+        "tracker_exercise_id": "pendulum"
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "scapular_setting",
+      "name": "Scapular Setting",
+      "conditions": ["Shoulder Impingement", "Rotator Cuff", "Shoulder Instability", "General Shoulder Pain"],
+      "stages": ["early", "mid"],
+      "irritability": ["high", "moderate", "low"],
+      "category": "motor_control",
+      "equipment": [],
+      "default_sets": 2,
+      "default_reps": 10,
+      "frequency": "daily",
+      "instructions": "Sit or stand tall. Gently draw the shoulder blades back and slightly down as if setting the shoulder into a stable position. Hold briefly, then relax.",
+      "avoid": "Do not shrug the shoulders or arch the back.",
+      "xai_reason": "Selected because scapular control supports shoulder movement and can be used at low intensity.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "wall_slide",
+      "name": "Wall Slide",
+      "conditions": ["Shoulder Impingement", "Rotator Cuff", "Frozen Shoulder", "General Shoulder Pain"],
+      "stages": ["early", "mid"],
+      "irritability": ["moderate", "low"],
+      "category": "range_of_motion",
+      "equipment": ["wall"],
+      "default_sets": 2,
+      "default_reps": 10,
+      "frequency": "daily or 3-5 days/week",
+      "instructions": "Stand facing a wall. Place the hand of the affected arm on the wall and slowly slide it upward as far as comfortable. Pause briefly, then slide back down.",
+      "avoid": "Do not force overhead range or continue if pain becomes sharp.",
+      "xai_reason": "Selected because it improves shoulder range of motion in a controlled and supported way.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "external_rotation_band",
+      "name": "External Rotation with Resistance Band",
+      "conditions": ["Shoulder Impingement", "Rotator Cuff", "Shoulder Instability", "General Shoulder Pain"],
+      "stages": ["mid", "late"],
+      "irritability": ["moderate", "low"],
+      "category": "strength",
+      "equipment": ["light resistance band"],
+      "default_sets": 3,
+      "default_reps": 12,
+      "frequency": "3 days/week",
+      "instructions": "Stand with the elbow bent to 90 degrees and held close to the side. Hold a light resistance band and rotate the forearm outward slowly, then return with control.",
+      "avoid": "Do not let the elbow move away from the body or use heavy resistance too early.",
+      "xai_reason": "Selected because rotator cuff strengthening is commonly used for shoulder control and function.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "internal_rotation_band",
+      "name": "Internal Rotation with Resistance Band",
+      "conditions": ["Rotator Cuff", "Shoulder Instability", "General Shoulder Pain"],
+      "stages": ["mid", "late"],
+      "irritability": ["moderate", "low"],
+      "category": "strength",
+      "equipment": ["light resistance band"],
+      "default_sets": 3,
+      "default_reps": 12,
+      "frequency": "3 days/week",
+      "instructions": "Stand with the elbow bent to 90 degrees and close to the side. Pull the resistance band inward across the body slowly, then return with control.",
+      "avoid": "Do not twist the trunk or pull through pain.",
+      "xai_reason": "Selected because it strengthens shoulder internal rotators while maintaining controlled movement.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "isometric_external_rotation",
+      "name": "Isometric External Rotation",
+      "conditions": ["Rotator Cuff", "Shoulder Impingement", "General Shoulder Pain"],
+      "stages": ["early", "mid"],
+      "irritability": ["high", "moderate"],
+      "category": "isometric_strength",
+      "equipment": ["wall"],
+      "default_sets": 3,
+      "default_reps": 5,
+      "hold_seconds": 5,
+      "frequency": "daily or 3-5 days/week",
+      "instructions": "Stand next to a wall with the elbow bent to 90 degrees. Gently press the back of the hand outward into the wall without moving the arm. Hold, then relax.",
+      "avoid": "Do not press hard enough to increase symptoms above the pain limit.",
+      "xai_reason": "Selected because isometric loading can begin strengthening with minimal joint movement.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "doorway_pec_stretch",
+      "name": "Doorway Chest Stretch",
+      "conditions": ["Shoulder Impingement", "General Shoulder Pain", "ACJ Pain"],
+      "stages": ["mid", "late"],
+      "irritability": ["moderate", "low"],
+      "category": "flexibility",
+      "equipment": ["doorway"],
+      "default_sets": 2,
+      "default_reps": 4,
+      "hold_seconds": 20,
+      "frequency": "daily",
+      "instructions": "Place the forearm on a doorway with the elbow below or around shoulder height. Step forward gently until a stretch is felt across the chest. Hold without bouncing.",
+      "avoid": "Do not overstretch or place the shoulder in a painful position.",
+      "xai_reason": "Selected because chest flexibility may support shoulder positioning and movement.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "biceps_isometric",
+      "name": "Biceps Isometric Hold",
+      "conditions": ["Bicep Tendinopathy", "General Shoulder Pain"],
+      "stages": ["early", "mid"],
+      "irritability": ["high", "moderate"],
+      "category": "isometric_strength",
+      "equipment": [],
+      "default_sets": 3,
+      "default_reps": 5,
+      "hold_seconds": 10,
+      "frequency": "daily or 3-5 days/week",
+      "instructions": "Bend the elbow to about 90 degrees. Place the other hand on top of the forearm and gently push upward against resistance without moving the elbow. Hold, then relax.",
+      "avoid": "Do not hold your breath or push into sharp pain.",
+      "xai_reason": "Selected because controlled isometric loading may be used when tendon symptoms are irritable.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "wrist_extensor_eccentric",
+      "name": "Wrist Extensor Eccentric Exercise",
+      "conditions": ["Tennis Elbow"],
+      "stages": ["mid", "late"],
+      "irritability": ["moderate", "low"],
+      "category": "tendon_loading",
+      "equipment": ["light dumbbell or household weight"],
+      "default_sets": 3,
+      "default_reps": 12,
+      "frequency": "3-5 days/week",
+      "instructions": "Rest the forearm on a table with the wrist over the edge and palm facing down. Use the other hand to help lift the wrist up, then slowly lower it down under control.",
+      "avoid": "Do not use heavy weight early or continue if pain exceeds the safe pain threshold.",
+      "xai_reason": "Selected because progressive tendon loading is commonly used for lateral elbow tendon pain.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    },
+    {
+      "id": "wrist_flexor_eccentric",
+      "name": "Wrist Flexor Eccentric Exercise",
+      "conditions": ["Golfer's Elbow"],
+      "stages": ["mid", "late"],
+      "irritability": ["moderate", "low"],
+      "category": "tendon_loading",
+      "equipment": ["light dumbbell or household weight"],
+      "default_sets": 3,
+      "default_reps": 12,
+      "frequency": "3-5 days/week",
+      "instructions": "Rest the forearm on a table with the wrist over the edge and palm facing up. Use the other hand to help lift the wrist, then slowly lower it under control.",
+      "avoid": "Do not grip too tightly or load through sharp pain.",
+      "xai_reason": "Selected because progressive tendon loading is commonly used for medial elbow tendon pain.",
+      "implementation_status": {
+        "planner_available": true,
+        "motion_analysis_available": false,
+        "tracker_exercise_id": null
+      },
+      "source": {
+        "type": "local_library",
+        "review_status": "prototype_demo"
+      }
+    }
+  ]
+}
